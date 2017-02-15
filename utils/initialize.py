@@ -5,7 +5,7 @@ def initialize_tables():
     db = sqlite3.connect(database)
     c = db.cursor()
 
-    q = "CREATE TABLE users (username TEXT, password TEXT)"
+    q = "CREATE TABLE IF NOT EXISTS users (username TEXT, password TEXT)"
     c.execute(q)
 
     db.commit()

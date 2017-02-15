@@ -1,8 +1,7 @@
 from flask import Flask, render_template, request, session, redirect, url_for
 import hashlib
 import os
-import utils
-from  utils import accountManager
+from utils import accountManager, initialize
 
 app = Flask(__name__)
 with open("utils/key", "a+b") as f:
@@ -62,8 +61,7 @@ def logout():
     else:
         return redirect(url_for('loginOrRegister'))
 
-
-
 if __name__ == "__main__":
+    initialize.initialize_tables()
     app.debug = True
     app.run()
