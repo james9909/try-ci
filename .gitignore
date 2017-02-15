@@ -87,3 +87,14 @@ ENV/
 
 # Rope project settings
 .ropeproject
+
+#database
+database.db
+
+#secret key
+utils/key
+
+#vim backup :(
+*.swp
+
+
