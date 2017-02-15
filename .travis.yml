@@ -8,7 +8,6 @@ install:
   - pip install flask
   - pip install pytest
 script:
-  - python utils/initialize.py
-  - python -m pytest
+  - pytest -v
 notifications:
   email: false

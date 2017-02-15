@@ -1,22 +1,16 @@
-#!/usr/bin/python
-'''
-block comment describing the contents of this file
-'''
-import sqlite3   #enable control of an sqlite database
-import os
+import sqlite3
 
-keyFile = open("utils/key", "w")
-keyFile.write(os.urandom(32))
-keyFile.close()
+def initialize_tables():
+    database = "database.db"
+    db = sqlite3.connect(database)
+    c = db.cursor()
 
-f = "database.db"
+    q = "CREATE TABLE users (username TEXT, password TEXT)"
+    c.execute(q)
 
-db = sqlite3.connect(f) #open if f exists, otherwise create
-c = db.cursor()    #facilitate db ops
+    db.commit()
+    db.close()
+    return db
 
-#------------------------create tables---------------------------------------
-q = "CREATE TABLE users (username TEXT, password TEXT)"
-c.execute(q)
-
-db.commit()
-db.close()
+if __name__ == "__main__":
+    initialize_tables()
