@@ -16,3 +16,10 @@ class TestGeneral():
             "pwd":"password2"
             })
         assert "register failed" in response.data
+
+    def test_login(self, client):
+        response = client.post("/login", data={
+            "username":"y",
+            "password":"y"
+            })
+        assert "login successful" in response.data
