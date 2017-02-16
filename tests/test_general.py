@@ -3,23 +3,37 @@ class TestGeneral():
         assert True
 
     def test_register(self, client, db):
-        response = client.post("/register", data={
-            "username":"y",
-            "password":"y",
-            "pwd":"y"
-        })
-        assert "register successful" in response.data
+        USER = {
+            "username": "user1",
+            "password": "password",
+            "pwd": "hi"
+        }
 
-        response = client.post("/register", data={
-            "username":"x",
-            "password":"password",
-            "pwd":"password2"
-            })
-        assert "register failed" in response.data
+        response = client.post("/register", data=USER)
+        assert "Passwords do not match" in response.data
+
+        USER["pwd"] = USER["password"]
+        response = client.post("/register", data=USER)
+        assert "User registered" in response.data
+
+        response = client.post("/register", data=USER)
+        assert "Username taken" in response.data
 
     def test_login(self, client):
         response = client.post("/login", data={
-            "username":"y",
-            "password":"y"
+            "username": "user2",
+            "password": "password"
             })
-        assert "login successful" in response.data
+        assert "User does not exist" in response.data
+
+        response = client.post("/login", data={
+            "username": "user1",
+            "password": "hi"
+        })
+        assert "Invalid credentials" in response.data
+
+        response = client.post("/login", data={
+            "username": "user1",
+            "password": "password"
+        })
+        assert "Redirecting..." in response.data

@@ -43,7 +43,7 @@ def register(user, password, password_confirm):
         c.execute("INSERT INTO users VALUES (?, ?)", (user, hashed,))
 
         success = True
-        message = "User %s registered!" % (user)
+        message = "User registered"
 
     db.commit()
     db.close()
