@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, session, redirect, url_for
-import hashlib
 import os
 from utils import accountManager, initialize
 
@@ -14,52 +13,45 @@ with open("utils/key", "a+b") as f:
 
 @app.route("/")
 def loginOrRegister():
-    if 'username' in session:
+    if "username" in session:
         return redirect("/loggedIn")
     else:
         return render_template("loginOrReg.html")
 
 @app.route("/loggedIn")
 def loggedIn():
-    if 'username' in session:
+    if "username" in session:
         return render_template("loggedIn.html")
     else:
         return redirect("/")
 
 @app.route("/login", methods=["POST"])
 def login():
-    formDict = request.form
-    username = formDict["username"]
-    password = formDict["password"]
-    loginStatus = ""
-    if  accountManager.authenticate(username,password): #returns true or false
-        loginStatus = "login successful"
-        return render_template("loggedIn.html",status=loginStatus)
-    else:
-        loginStatus = "login failed"
-        return render_template("loginOrReg.html",status=loginStatus)
+    form = request.form
+    username = form["username"]
+    password = form["password"]
+    success, message = accountManager.authenticate(username, password)
+    if success:
+        session["username"] = username
+        return redirect("/")
+    return render_template("loginOrReg.html",status=message)
 
 @app.route("/register", methods=["POST"])
 def register():
-    formDict = request.form
-    username = formDict["username"]
-    password = formDict["password"]
-    pwd = formDict["pwd"]  #confirm password
-    registerStatus = ""
-    if accountManager.register(username,password,pwd): #returns true or false
-        registerStatus = "register successful"
-    else :
-        registerStatus = "register failed"
-    return render_template("loginOrReg.html",status=registerStatus) #status is the login/creation message
+    form = request.form
+    username = form["username"]
+    password = form["password"]
+    pwd = form["pwd"]
+    success, message = accountManager.register(username, password, pwd)
+    return render_template("loginOrReg.html",status=message)
 
-#logout of user
-@app.route('/logout', methods=["POST", "GET"])
+@app.route("/logout", methods=["POST", "GET"])
 def logout():
     if "username" in session:
-        session.pop('username')
+        session.pop("username")
         return render_template("loginOrReg.html",status="logged out")
     else:
-        return redirect(url_for('loginOrRegister'))
+        return redirect(url_for("loginOrRegister"))
 
 if __name__ == "__main__":
     initialize.initialize_tables()

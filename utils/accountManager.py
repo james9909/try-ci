@@ -1,73 +1,50 @@
-#Manages the account info tables in the db
-import sqlite3   #enable control of an sqlite database
-import csv       #facilitates CSV I/O
+import hashlib
+import sqlite3
 
-from hashlib import sha1
+def authenticate(user, password):
+    f = "database.db"
+    db = sqlite3.connect(f)
+    c = db.cursor()
+    hashed = hashlib.sha1(password).hexdigest()
 
-def authenticate(user,password):
+    c.execute("SELECT * FROM users WHERE username = ?", (user,))
+    l = c.fetchone()
 
-    f="database.db"
-    db = sqlite3.connect(f) #open if f exists, otherwise create
-    c = db.cursor()  #facilitate db ops
-    isLogin = False #Default to false; login info correct?
-    loginStatusMessage = "" #what's wrong
-    #messageNumber = 0 #represents what kind of error it is
-    passHash = sha1(password).hexdigest()#hash it
-
-    checkUser = 'SELECT * FROM users WHERE username=="%s";' % (user)  #checks if the user is in the database
-    c.execute(checkUser)
-    l = c.fetchone() #listifies the results
     if l == None:
-        isLogin = False
-    #    messageNumber = 0
-        loginStatusMessage = "user does not exist"
-    elif l[1] == passHash:
-        isLogin = True
-    #    messageNumber = 1
-        loginStatusMessage = "login info correct"
+        success = False
+        message = "User does not exist"
+    elif l[1] == hashed:
+        success = True
+        message = "Logged in"
     else:
-        isLogin = False
-    #    messageNumber = 2
-        loginStatusMessage = "wrong password"
+        success = False
+        message = "Invalid credentials"
 
-    db.commit() #save changes
-    db.close()  #close database
-    #return messageNumber
-    return isLogin
+    db.commit()
+    db.close()
+    return success, message
 
-#returns true if register worked
-def register(user,password,pwd):    #user-username, password-password, pwd-retype
+def register(user, password, password_confirm):
     f="database.db"
-    db = sqlite3.connect(f) #open if f exists, otherwise create
-    c = db.cursor()  #facilitate db ops  <-- I don't really know what that means but ok
-    isRegister = False #defualt not work
-    registerStatus = ""
-    #messageNumber = 0 #for message
+    db = sqlite3.connect(f)
+    c = db.cursor()
 
+    c.execute("SELECT * FROM users WHERE username = ?", (user,))
+    result = c.fetchone()
 
-    checkUser = 'SELECT * FROM users WHERE username=="%s";' % (user)  #checks if the user is in the database
-    c.execute(checkUser)
-    l = c.fetchone() #listifies the results
+    if result:
+        success = False
+        message = "Username taken"
+    elif password != password_confirm:
+        success = False
+        message = "Passwords do not match"
+    elif password == password_confirm:
+        hashed = hashlib.sha1(password).hexdigest()
+        c.execute("INSERT INTO users VALUES (?, ?)", (user, hashed,))
 
-    if l != None:
-        isRegister = False
-    #    messageNumber = 0
-        registerStatus = "username taken"
-    elif (password != pwd):
-        isRegister = False
-    #    messageNumber = 1
-        registerStatus = "passwords do not match"
-    elif (password == pwd):
-        passHash = sha1(password).hexdigest()#hash it
-        insertUser = 'INSERT INTO users VALUES ("%s","%s");' % (user,passHash) #sqlite code for inserting new user
-        c.execute(insertUser)
+        success = True
+        message = "User %s registered!" % (user)
 
-        isRegister = True
-    #    messageNumber = 2
-        registerStatus = "user %s registered!" % (user)
-
-    db.commit() #save changes
-    db.close()  #close database
-    #return messageNumber
-    return isRegister
-
+    db.commit()
+    db.close()
+    return success, message
