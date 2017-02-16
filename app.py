@@ -12,7 +12,7 @@ with open("utils/key", "a+b") as f:
     app.secret_key = secret_key
 
 @app.route("/")
-def loginOrRegister():
+def index():
     if "username" in session:
         return redirect("/loggedIn")
     else:
@@ -51,7 +51,7 @@ def logout():
         session.pop("username")
         return render_template("loginOrReg.html",status="logged out")
     else:
-        return redirect(url_for("loginOrRegister"))
+        return redirect(url_for("index"))
 
 if __name__ == "__main__":
     initialize.initialize_tables()

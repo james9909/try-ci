@@ -25,7 +25,7 @@ def authenticate(user, password):
     return success, message
 
 def register(user, password, password_confirm):
-    f="database.db"
+    f = "database.db"
     db = sqlite3.connect(f)
     c = db.cursor()
 
