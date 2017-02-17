@@ -1,6 +1,7 @@
-from flask import Flask, render_template, request, session, redirect, url_for
+from flask import Flask, render_template, request, session, redirect, url_for, json
 import os
 from utils import accountManager, initialize
+import math
 
 app = Flask(__name__)
 with open("utils/key", "a+b") as f:
@@ -52,6 +53,20 @@ def logout():
         return render_template("loginOrReg.html",status="logged out")
     else:
         return redirect(url_for("index"))
+
+def getFib(n):
+    if n <= 1:
+        return 1
+    return getFib(n-1) + getFib(n-2)
+
+@app.route("/fib", methods=["POST","GET"])
+def fib():
+    n = request.args.get("n")
+    print "n"
+    print n
+    n = int(n)
+    ans = {"result":getFib(n)}
+    return json.dumps(ans)
 
 if __name__ == "__main__":
     initialize.initialize_tables()
