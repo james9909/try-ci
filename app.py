@@ -54,19 +54,15 @@ def logout():
     else:
         return redirect(url_for("index"))
 
-def getFib(n):
-    if n <= 1:
-        return 1
-    return getFib(n-1) + getFib(n-2)
-
 @app.route("/fib", methods=["POST","GET"])
 def fib():
-    n = request.args.get("n")
-    print "n"
-    print n
+    n = request.form.get("n")
     n = int(n)
-    ans = {"result":getFib(n)}
-    return json.dumps(ans)
+    Phi = (1 + math.sqrt(5)) / 2.0
+    phi = (1 - math.sqrt(5)) / 2.0
+    answer = math.floor((math.pow(Phi, n) - math.pow(phi, n)) / math.sqrt(5))
+    result = {"result": answer}
+    return json.dumps(result)
 
 if __name__ == "__main__":
     initialize.initialize_tables()
