@@ -64,6 +64,15 @@ def fib():
     result = {"result": answer}
     return json.dumps(result)
 
+@app.route("/add", methods=["POST","GET"])
+def fib():
+    a = request.form.get("a")
+    b = request.form.get("b")
+    a , b = int(a), int(b)
+    answer = a - b
+    result = {"result": answer}
+    return json.dumps(result)
+
 if __name__ == "__main__":
     initialize.initialize_tables()
     app.debug = True
