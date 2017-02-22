@@ -77,7 +77,7 @@ def add():
     a = request.form.get("a")
     b = request.form.get("b")
     a , b = int(a), int(b)
-    answer = a - b
+    answer = a + b
     result = {"result": answer}
     return json.dumps(result)
 
