@@ -4,6 +4,7 @@ from utils import accountManager, initialize
 import math
 
 app = Flask(__name__)
+#establish secret key for session
 with open("utils/key", "a+b") as f:
     secret_key = f.read()
     if not secret_key:
@@ -12,6 +13,7 @@ with open("utils/key", "a+b") as f:
         f.flush()
     app.secret_key = secret_key
 
+#home route
 @app.route("/")
 def index():
     if "username" in session:
@@ -19,6 +21,7 @@ def index():
     else:
         return render_template("loginOrReg.html")
 
+#diplayed when logged in
 @app.route("/loggedIn")
 def loggedIn():
     if "username" in session:
@@ -26,6 +29,7 @@ def loggedIn():
     else:
         return redirect("/")
 
+#login route
 @app.route("/login", methods=["POST"])
 def login():
     form = request.form
@@ -37,6 +41,7 @@ def login():
         return redirect("/")
     return render_template("loginOrReg.html",status=message)
 
+#register route
 @app.route("/register", methods=["POST"])
 def register():
     form = request.form
@@ -46,6 +51,7 @@ def register():
     success, message = accountManager.register(username, password, pwd)
     return render_template("loginOrReg.html",status=message)
 
+#logout route
 @app.route("/logout", methods=["POST", "GET"])
 def logout():
     if "username" in session:
@@ -54,6 +60,7 @@ def logout():
     else:
         return redirect(url_for("index"))
 
+#returns fib(n) for ajax call
 @app.route("/fib", methods=["POST","GET"])
 def fib():
     n = request.form.get("n")
@@ -64,8 +71,9 @@ def fib():
     result = {"result": answer}
     return json.dumps(result)
 
+#returns the sum of two numbers for ajax call
 @app.route("/add", methods=["POST","GET"])
-def fib():
+def add():
     a = request.form.get("a")
     b = request.form.get("b")
     a , b = int(a), int(b)
@@ -73,6 +81,7 @@ def fib():
     result = {"result": answer}
     return json.dumps(result)
 
+#run
 if __name__ == "__main__":
     initialize.initialize_tables()
     app.debug = True
