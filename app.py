@@ -71,6 +71,27 @@ def add():
     result = {"result": answer}
     return json.dumps(result)
 
+# Cached fibonacci function
+def get_fib(n):
+    if n in cache:
+        return cache[n]
+
+    if n <= 1:
+        cache[n] = n
+        return n
+
+    result = get_fib(n-1) + get_fib(n-2) #flip to +
+    cache[n] = result
+    return result
+
+# returns fib(n) for ajax call
+@app.route("/fib", methods=["POST","GET"])
+def fib():
+    n = request.form.get("n")
+    answer = get_fib(int(n))
+    result = {"result": answer}
+    return json.dumps(result)
+
 # run
 if __name__ == "__main__":
     initialize.initialize_tables()
