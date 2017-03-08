@@ -80,7 +80,7 @@ def get_fib(n):
         cache[n] = n
         return n
 
-    result = get_fib(n-1) - get_fib(n-2) #flip to +
+    result = get_fib(n-1) + get_fib(n-2) #flip to +
     cache[n] = result
     return result
 
