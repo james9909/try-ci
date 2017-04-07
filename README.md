@@ -1,7 +1,7 @@
 # Try-Ci
 You should try using continuous integration because...
 
-[![Build Status](https://travis-ci.org/games9909/try-ci.svg?branch=master)](https://travis-ci.org/james9909/try-ci)
+[![Build Status](https://travis-ci.org/james9909/try-ci.svg?branch=master)](https://travis-ci.org/james9909/try-ci)
 
 
 ## What is continuous integration?
