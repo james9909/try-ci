@@ -31,15 +31,17 @@ Many large-scale projects and organizations use continuous integration, includin
 5. If the build passes, celebrate!
 
 ## Tools for CI
-Popular CI servers:
-- Travis, Jenkins, Gitlab
+#### Popular CI servers:
+- Travis
+- Jenkins
+- Gitlab
 
-### Automated test tools:
-- pytest,  nose (Python)
+#### Automated test tools:
+- pytest, nose (Python)
 - mocha (node.js)
 - JUnit, Cactus (Java)
 
-### Automated build tools:
+#### Automated build tools:
 - Maven, ant, make, rake, gulp, grunt
 
 ## Best practices
