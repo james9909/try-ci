@@ -3,8 +3,13 @@ You should try using continuous integration because...
 
 [![Build Status](https://travis-ci.org/james9909/try-ci.svg?branch=master)](https://travis-ci.org/james9909/try-ci)
 
-[hi](#tools-for-ci)
-
+Table of Contents
+=================
+* [What is continuous integration?](#what-is-continuous-integration)
+* [Why use continuous integration?](#why-use-continuous-integration)
+* [How does it work?](#how-does-it-work)
+* [Tools for CI](#tools-for-ci)
+* [Best practices](#best-practices)
 
 ## What is continuous integration?
 Continuous integration (CI) is a widespread software development practice that involves frequently committing code to a central repository.
