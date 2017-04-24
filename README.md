@@ -39,9 +39,9 @@ Many large-scale projects and organizations use continuous integration, includin
 
 ## Tools for CI
 #### Popular CI servers:
-- Travis
-- Jenkins
-- Gitlab
+- [Travis](https://travis-ci.org)
+- [Jenkins](https://jenkins.io/)
+- [Gitlab](https://about.gitlab.com/)
 
 #### Automated test tools:
 - pytest, nose (Python)
