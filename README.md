@@ -31,11 +31,7 @@ Many large-scale projects and organizations use continuous integration, includin
 - Code with confidence knowing that project standards are being adhered to and that the product is functioning
 
 ## How does it work?
-1.  A developer commits changes to a central repository
-2. The CI server monitoring the repository notices a new commit, checks out the code, and executes a master build script
-3.  The CI server labels the build as passing or failing and notifies the team
-4. If the build fails, the developer knows to take immediate action.  Once they have corrected the problem, the cycle repeats.
-5. If the build passes, celebrate!
+![How Does it Work](https://github.com/james9909/try-ci/blob/gh-pages/howDoesItWork.png)
 
 ## Tools for CI
 #### Popular CI servers:
