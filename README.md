@@ -31,7 +31,7 @@ Many large-scale projects and organizations use continuous integration, includin
 - Code with confidence knowing that project standards are being adhered to and that the product is functioning
 
 ## How does it work?
-![How Does it Work](https://github.com/james9909/try-ci/blob/gh-pages/howDoesItWork.png)
+![How Does it Work](https://raw.githubusercontent.com/james9909/try-ci/gh-pages/howDoesItWork.png)
 
 ## Tools for CI
 #### Popular CI servers:
